@@ -7,7 +7,7 @@ const excluded = ['/']
 
 function getController(path, obj, app){
   if(typeof obj === 'function'){
-    app.use(path,obj)
+    app.use(path, obj)
   }
   else{
     Object.keys(obj).forEach( key => {

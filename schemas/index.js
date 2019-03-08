@@ -9,7 +9,7 @@ function assignAllJswon(dir, all){
   fs.readdirSync(dir)
       .forEach( target => {
         const targetDir = path.join(dir,target)
-        if(fs.statSync(targetDIr).isDirectory()){
+        if(fs.statSync(targetDir).isDirectory()){
           assignAllJswon(targetDir,all)
         }
         if(target.endsWith('.json')){
@@ -39,6 +39,6 @@ function convert(data, schema, option){
 
 
 module.exports = {
- entry : assignAllJswon(__dirname,{})
+ entry : assignAllJswon(__dirname,{}),
  convert
 }
