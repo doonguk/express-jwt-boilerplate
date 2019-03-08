@@ -45,6 +45,6 @@ function loadRoutes(dir, currentDir, app){
 
 
 module.exports = (app) => {
-  loadRoutes(__dirname, __dirname)
-  loadRoutes(path.join(__dirname,'../controllers'), path.join(__dirname, '../controllers'))
+  loadRoutes(__dirname, __dirname, app)
+  loadRoutes(path.join(__dirname,'../controllers'), path.join(__dirname, '../controllers'), app)
 }
