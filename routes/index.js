@@ -21,7 +21,7 @@ function getController(path, obj, app){
           url = `${path}/${key}`;
         }
         const args = [requestMiddleware(ctrl.path, ctrl.schema),...ctrl.middleware, ctrl.handler]
-        app[ctrl.method](url,args)
+        app[ctrl.method](url, args)
 
       }
     })
@@ -45,5 +45,6 @@ function loadRoutes(dir, currentDir, app){
 
 
 module.exports = (app) => {
-  loadRoutes()
+  loadRoutes(__dirname, __dirname)
+  loadRoutes(path.join(__dirname,'../controllers'), path.join(__dirname, '../controllers'))
 }
