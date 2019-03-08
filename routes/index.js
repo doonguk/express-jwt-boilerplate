@@ -1,11 +1,31 @@
 const  fs = require('fs');
 const path =require('path');
-
+const ApiRouter = require('../controllers/default').ApiRouter
+const requestMiddleware = require('../middlewares/request')
 
 const excluded = ['/']
 
 function getController(path, obj, app){
+  if(typeof obj === 'function'){
+    app.use(path,obj)
+  }
+  else{
+    Object.keys(obj).forEach( key => {
+      if( key instanceof ApiRouter ){
+        const ctrl = obj[key]
+        let url;
+        if(typeof ctrl.name === 'string'){
+          url = ctrl.name.length > 0 ? `${path}/${ctrl.name}` : path
+        }
+        else{
+          url = `${path}/${key}`;
+        }
+        const args = [requestMiddleware(ctrl.path, ctrl.schema),...ctrl.middleware, ctrl.handler]
+        app[ctrl.method](url,args)
 
+      }
+    })
+  }
 }
 function loadRoutes(dir, currentDir, app){
   fs.readdirSync(dir)

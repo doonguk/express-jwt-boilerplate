@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "properties" : {
+    "email" : {
+      "type" : "string",
+      "format" : "email"
+    },
+    "password" : {
+      "type" : "string",
+      "pattern" : "^[0-9a-zA-Z!@#$%^&*()?+-_~=\/]{6,20}$"
+    }
+  },
+  "required" : [
+    "email","password"
+  ]
+}
