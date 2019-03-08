@@ -10,8 +10,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet())
-
+console.log(process.env.NODE_ENV)
 router(app);
+
 
 module.exports = app;
 
