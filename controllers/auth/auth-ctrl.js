@@ -34,3 +34,21 @@ module.exports.postAuth = async(req, res, next) => {
     next(err)
   }
 }
+
+module.exports.putAuth = async(req, res, next) => {
+  try{
+    const { password, newPassword } = req.option
+    if(password === newPassword ) res.status(409).json()
+    const user = await User.findOne({id : req.user_id})
+    if( user && User.verifyPassword(password, user.password, user.salt)){
+      const refreshHash = await User.updatePassword(newPassword, req.user_id)
+      const refreshToken = await jwt.createRefreshToken({user_id : req.option}, refreshHash)
+      res.status(200).json({refreshToken})
+    }
+    else{
+      res.status(404).json()
+    }
+  }catch(err){
+    next(err)
+  }
+}

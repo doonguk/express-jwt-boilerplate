@@ -55,6 +55,22 @@ module.exports.verifyPassword = (password, passwordHash, salt) => {
  })
 }
 
+module.exports.updatePassword = async (newPassword, id) => {
+  try{
+    const refreshHash = generateRandomHash(64)
+    const passwordHash = await createPasswordHash(newPassword)
+    await db.query({
+      sql :`UPDATE ?? SET ? WHERE?`,
+      values : [this.tableName,
+        {password : passwordHash.password, salt : passwordHash.salt, refresh : refreshHash},
+        {id}
+       ]
+    })
+    return refreshHash
+  }catch(err){
+    throw err
+  }
+}
 
 module.exports.findOne = async (option) => {
   try{

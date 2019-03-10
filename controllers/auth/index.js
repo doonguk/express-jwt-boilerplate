@@ -30,3 +30,16 @@ module.exports.postAuth = new ApiRouter({
   },
   handler: ctrl.postAuth
 })
+
+module.exports.putAuth = new ApiRouter({
+  name : '',
+  method : 'put',
+  summary: 'edit password',
+  tags : ['Auth'],
+  isPublic : false,
+  responses : {
+    200 : { description : 'Success Change'},
+    404 : { description : 'Not Found' }
+  },
+  handler : ctrl.putAuth
+})

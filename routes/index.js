@@ -2,6 +2,7 @@ const  fs = require('fs');
 const path =require('path');
 const ApiRouter = require('../controllers/default').ApiRouter
 const requestMiddleware = require('../middlewares/request')
+const jwtMiddleware = require('../middlewares/jwt')
 
 const excluded = ['/']
 
@@ -21,6 +22,7 @@ function getController(path, obj, app){
           url = `${path}/${key}`;
         }
         const args = [requestMiddleware(ctrl.path, ctrl.schema),...ctrl.middleware, ctrl.handler]
+        if(!ctrl.isPublic) args.unshift(jwtMiddleware)
         app[ctrl.method](url, args)
         console.log('Route : ',`app.${ctrl.method}(${url}`)
 
