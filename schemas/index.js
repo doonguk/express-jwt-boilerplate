@@ -17,13 +17,13 @@ function assignAllJswon(dir, all){
           all[key] = require(targetDir)
         }
       })
+  return all;
 }
 
 function convert(data, schema, option){
   if(!schema) throw 'schema is undefined!'
   const components = Object.assign({}, this.entry)
   delete components[schema]
-
   const ajvObject = Object.assign({}, this.entry[schema]);
   ajvObject.components = { schemas : components }
 

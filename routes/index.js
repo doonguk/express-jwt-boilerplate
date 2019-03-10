@@ -11,8 +11,8 @@ function getController(path, obj, app){
   }
   else{
     Object.keys(obj).forEach( key => {
-      if( key instanceof ApiRouter ){
-        const ctrl = obj[key]
+      const ctrl = obj[key]
+      if( ctrl instanceof ApiRouter ){
         let url;
         if(typeof ctrl.name === 'string'){
           url = ctrl.name.length > 0 ? `${path}/${ctrl.name}` : path
@@ -22,6 +22,7 @@ function getController(path, obj, app){
         }
         const args = [requestMiddleware(ctrl.path, ctrl.schema),...ctrl.middleware, ctrl.handler]
         app[ctrl.method](url, args)
+        console.log('Route : ',`app.${ctrl.method}(${url}`)
 
       }
     })
@@ -39,6 +40,7 @@ function loadRoutes(dir, currentDir, app){
           const requirePath = path.relative(__dirname, targetDir)
           const file = require(`./${requirePath}`);
           getController(routePath, file, app)
+
         }
       })
 }
