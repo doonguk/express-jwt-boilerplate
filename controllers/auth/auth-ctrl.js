@@ -17,3 +17,20 @@ module.exports.postRegister = async (req, res, next) => {
     next(err)
   }
 }
+
+module.exports.postAuth = async(req, res, next) => {
+  try {
+    const {email, password} = req.option
+    const user = await User.findOne({email})
+    if (user && User.verifyPassword(password, user.password, user.salt)) {
+      const accessToken = await jwt.createAccessToken({user_id: user.id})
+      const refreshToken = await jwt.createRefreshToken({user_id:user.id}, user.refresh)
+      res.status(200).json({accessToken, refreshToken})
+    }
+    else{
+      res.status(404).json()
+    }
+  }catch(err){
+    next(err)
+  }
+}

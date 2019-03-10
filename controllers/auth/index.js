@@ -16,3 +16,17 @@ module.exports.createUser = new ApiRouter({
   },
   handler : ctrl.postRegister
 })
+
+module.exports.postAuth = new ApiRouter({
+  name : '',
+  method : 'post',
+  summary: 'Sign in',
+  tags : ['Auth'],
+  schema : 'PostAuth',
+  isPublic : true,
+  responses : {
+    200 : { description : 'Sign in Success'},
+    404 : { description : 'Not Found'}
+  },
+  handler: ctrl.postAuth
+})

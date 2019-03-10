@@ -39,6 +39,22 @@ module.exports.createUser = async( option, connection ) => {
   }
 }
 
+module.exports.verifyPassword = (password, passwordHash, salt) => {
+ return new Promise ( (resolve, reject) => {
+  try{
+    crypto.pbkdf2(password, salt, 104236, 64, 'sha512', (err, key)=>{
+      if(err) reject(err)
+      if(key.toString('base64')=== passwordHash){
+        resolve(true)
+      }
+      else resolve(false)
+    })
+  }catch(err){
+    reject(err)
+  }
+ })
+}
+
 
 module.exports.findOne = async (option) => {
   try{
