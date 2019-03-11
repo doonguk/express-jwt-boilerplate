@@ -3,7 +3,7 @@ const path =require('path');
 const ApiRouter = require('../controllers/default').ApiRouter
 const requestMiddleware = require('../middlewares/request')
 const jwtMiddleware = require('../middlewares/jwt')
-
+const errorMiddleware = require('../middlewares/error')
 const excluded = ['/']
 
 function getController(path, obj, app){
@@ -51,4 +51,5 @@ function loadRoutes(dir, currentDir, app){
 module.exports = (app) => {
   loadRoutes(__dirname, __dirname, app)
   loadRoutes(path.join(__dirname,'../controllers'), path.join(__dirname, '../controllers'), app)
+  errorMiddleware(app)
 }
