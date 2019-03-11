@@ -52,3 +52,20 @@ module.exports.putAuth = async(req, res, next) => {
     next(err)
   }
 }
+
+module.exports.deleteAuth = async (req, res, next) => {
+  try{
+    res.status(204).json()
+  }catch(err){
+    next(err)
+  }
+}
+
+module.exports.postRefresh = async (req, res, next) => {
+  try{
+    const accessToken = await jwt.refreshToken(req.option)
+    res.status(201).json({accessToken})
+  }catch(err){
+    next(err)
+  }
+}

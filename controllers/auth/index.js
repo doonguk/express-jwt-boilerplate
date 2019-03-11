@@ -43,3 +43,27 @@ module.exports.putAuth = new ApiRouter({
   },
   handler : ctrl.putAuth
 })
+
+module.exports.deleteAuth = new ApiRouter({
+  name : '',
+  method : 'delete',
+  summary : 'Sign Out',
+  tags : ['Auth'],
+  responses : {
+    201 : { description : 'Sign Out Success '}
+  },
+  handler : ctrl.deleteAuth
+})
+
+module.exports.postRefresh = new ApiRouter({
+  name : 'refresh',
+  method : 'post',
+  schema : 'PostRefresh',
+  summary : 'Refresh Token',
+  tags : ['Auth'],
+  isPublic : true,
+  responses : {
+    201 : { description : 'New Access Token is created'}
+  },
+  handler : ctrl.postRefresh
+})
